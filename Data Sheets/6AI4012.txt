@@ -1,0 +1,6 @@
+https://core-electronics.com.au/tb6600-stepper-motor-driver.html
+
+Note: This driver will be used with the two small stepper motors (either this on or A4899 motor driver !!)
+
+
+#Note: tb6600 has the same form factor (similar)

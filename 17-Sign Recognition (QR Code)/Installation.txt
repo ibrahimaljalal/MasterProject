@@ -1,0 +1,4 @@
+sudo apt-get install libzbar0
+pip3 install pyzbar
+pip install opencv-python
+pip install opencv-contrib-python

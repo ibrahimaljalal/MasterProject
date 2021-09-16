@@ -1,0 +1,176 @@
+
+//p (parameters)
+///////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+int baudRate=9600;
+
+int serialTimeout=10;
+
+//steer Motor
+const int steerMotorStepsPerRevolution = 200;
+
+
+int stmPinPUL=2;
+int stmPinDIR=3;
+
+//in microseconds  (between pulses )
+int stmDelay=500;
+
+
+//Speed motor
+const int speedMotorStepsPerRevolution = 200;
+
+int spmPinPUL=4;
+int spmPinDIR=5;
+
+
+int spmDelay=500;
+
+//Break motor
+const int breakMotorStepsPerRevolution = 200;
+
+int bmPinPUL=6;
+int bmPinDIR=7;
+
+
+int bmDelay=500;
+
+
+///////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+
+
+char steerMotor='s';
+char speedMotor='v';
+char breakMotor='b';
+
+String holder="";
+char motorType;
+int motorSteps;
+
+
+
+
+
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(baudRate);
+  Serial.setTimeout(serialTimeout);
+
+  pinMode(stmPinPUL, OUTPUT);
+  pinMode(stmPinDIR, OUTPUT);
+
+ 
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  if (Serial.available()>0){
+    String str = Serial.readString();
+    
+    holder="";
+    
+    int strlength= str.length();
+    motorType=str[0];
+
+    if (motorType==steerMotor){
+      for (int i=1;i<strlength;i++){
+        holder+=str[i];
+        }
+      motorSteps=holder.toInt();
+
+      if (motorSteps >0){
+        digitalWrite(stmPinDIR,LOW); 
+        }
+        
+      if (motorSteps <0){
+        digitalWrite(stmPinDIR,HIGH); 
+        }
+
+        for (int j=1;j<=motorSteps;j++){
+          digitalWrite(stmPinPUL,HIGH);
+          delayMicroseconds(stmDelay);
+          digitalWrite(stmPinPUL,LOW);
+          delayMicroseconds(stmDelay);
+          
+          
+          }
+           
+      Serial.println(motorSteps);
+      Serial.println("From steering");
+      
+      
+      }
+
+//speed
+    if (motorType==speedMotor){
+      for (int i=1;i<strlength;i++){
+        holder+=str[i];
+        }
+      motorSteps=holder.toInt();
+
+      if (motorSteps >0){
+        digitalWrite(spmPinDIR,LOW); 
+        }
+        
+      if (motorSteps <0){
+        digitalWrite(spmPinDIR,HIGH); 
+        }
+
+        for (int j=1;j<=motorSteps;j++){
+          digitalWrite(spmPinPUL,HIGH);
+          delayMicroseconds(spmDelay);
+          digitalWrite(spmPinPUL,LOW);
+          delayMicroseconds(spmDelay);
+          
+          
+          }
+           
+      Serial.println(motorSteps);
+      Serial.println("From speed");
+      
+     
+      }
+
+//break      
+
+    if (motorType==breakMotor){
+      for (int i=1;i<strlength;i++){
+        holder+=str[i];
+        }
+      motorSteps=holder.toInt();
+
+      if (motorSteps >0){
+        digitalWrite(bmPinDIR,LOW); 
+        }
+        
+      if (motorSteps <0){
+        digitalWrite(bmPinDIR,HIGH); 
+        }
+
+        for (int j=1;j<=motorSteps;j++){
+          digitalWrite(bmPinPUL,HIGH);
+          delayMicroseconds(bmDelay);
+          digitalWrite(bmPinPUL,LOW);
+          delayMicroseconds(bmDelay);
+          
+          
+          }
+           
+      Serial.println(motorSteps);
+      Serial.println("From break");
+      
+     
+      }
+
+      
+    
+    
+     
+    }
+   
+    
+    
+    
+
+}
